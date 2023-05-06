@@ -1,36 +1,36 @@
 import { FormEvent, useRef, useState } from "react";
 
 const Form = () => {
-  //ref HOOK to access elements
-  const nameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const phoneRef = useRef<HTMLInputElement>(null);
-  const subjectRef = useRef<HTMLInputElement>(null);
-  const msgRef = useRef<HTMLTextAreaElement>(null);
-
-  const request = {
+  const [formRequest, setFormRequest] = useState({
     name: "",
     email: "",
     phone: "",
     subject: "",
     message: "",
-  };
+  });
+
+  //ref HOOK to access elements
+  //   const nameRef = useRef<HTMLInputElement>(null);
+  //   const emailRef = useRef<HTMLInputElement>(null);
+  //   const phoneRef = useRef<HTMLInputElement>(null);
+  //   const subjectRef = useRef<HTMLInputElement>(null);
+  //   const msgRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmitForm = (event: FormEvent) => {
     event.preventDefault();
     console.log("------submitted form");
+    console.log(formRequest);
 
-    request.name = nameRef.current !== null ? nameRef.current.value : "";
+    // request.name = nameRef.current !== null ? nameRef.current.value : "";
 
-    request.email = emailRef.current !== null ? emailRef.current.value : "";
+    // request.email = emailRef.current !== null ? emailRef.current.value : "";
 
-    request.phone = phoneRef.current !== null ? phoneRef.current.value : "";
+    // request.phone = phoneRef.current !== null ? phoneRef.current.value : "";
 
-    request.subject =
-      subjectRef.current !== null ? subjectRef.current.value : "";
+    // request.subject =
+    //   subjectRef.current !== null ? subjectRef.current.value : "";
 
-    request.message = msgRef.current !== null ? msgRef.current.value : "";
-    console.log(request);
+    // request.message = msgRef.current !== null ? msgRef.current.value : "";
   };
 
   return (
@@ -46,7 +46,10 @@ const Form = () => {
                 Name
               </label>
               <input
-                ref={nameRef}
+                onChange={(event) =>
+                  setFormRequest({ ...formRequest, name: event.target.value })
+                }
+                value={formRequest.name}
                 id="name"
                 type="text"
                 className="form-control"
@@ -57,7 +60,9 @@ const Form = () => {
                 Email
               </label>
               <input
-                ref={emailRef}
+                onChange={(event) =>
+                  setFormRequest({ ...formRequest, email: event.target.value })
+                }
                 id="email"
                 type="email"
                 className="form-control"
@@ -68,7 +73,10 @@ const Form = () => {
                 Phone
               </label>
               <input
-                ref={phoneRef}
+                onChange={(event) =>
+                  setFormRequest({ ...formRequest, phone: event.target.value })
+                }
+                value={formRequest.phone}
                 id="phone"
                 type="text"
                 className="form-control"
@@ -80,7 +88,13 @@ const Form = () => {
                 Subject
               </label>
               <input
-                ref={subjectRef}
+                onChange={(event) =>
+                  setFormRequest({
+                    ...formRequest,
+                    subject: event.target.value,
+                  })
+                }
+                value={formRequest.subject}
                 id="subject"
                 type="text"
                 className="form-control"
@@ -91,7 +105,17 @@ const Form = () => {
               <label htmlFor="message" className="form-label">
                 Message
               </label>
-              <textarea ref={msgRef} id="message" className="form-control" />
+              <textarea
+                onChange={(event) =>
+                  setFormRequest({
+                    ...formRequest,
+                    message: event.target.value,
+                  })
+                }
+                value={formRequest.message}
+                id="message"
+                className="form-control"
+              />
             </div>
           </div>
 
