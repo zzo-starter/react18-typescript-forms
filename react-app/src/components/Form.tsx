@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 const Form = () => {
+  const handleSubmitForm = (event: FormEvent) => {
+    event.preventDefault();
+    console.log("submitted form");
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmitForm}>
       <div className="container">
         <div className="card">
           <div className="card-header">
