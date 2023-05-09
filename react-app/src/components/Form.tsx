@@ -30,6 +30,7 @@ const Form = () => {
   const onFormSubmit = (data: FieldValues) => {
     //form values to be used in API request
     console.log("form field values: ", data);
+
   };
 
   return (
