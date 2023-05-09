@@ -1,40 +1,40 @@
 import { FormEvent, useRef, useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
 
 const Form = () => {
-  const [formRequest, setFormRequest] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
-  });
+  //E.2
+  //const form = useForm();
+  //console.log("form properties/methods: ", form);
 
-  //ref HOOK to access elements
-  //   const nameRef = useRef<HTMLInputElement>(null);
-  //   const emailRef = useRef<HTMLInputElement>(null);
-  //   const phoneRef = useRef<HTMLInputElement>(null);
-  //   const subjectRef = useRef<HTMLInputElement>(null);
-  //   const msgRef = useRef<HTMLTextAreaElement>(null);
+  //E.3 destructure the register function
+  const { register, handleSubmit } = useForm();
+  console.log("testing register func: ", register("name"));
 
-  const handleSubmitForm = (event: FormEvent) => {
-    event.preventDefault();
-    console.log("------submitted form");
-    console.log(formRequest);
+  //E.4 dont need useState
+  //   const [formRequest, setFormRequest] = useState({
+  //     name: "",
+  //     email: "",
+  //     phone: "",
+  //     subject: "",
+  //     message: "",
+  //   });
 
-    // request.name = nameRef.current !== null ? nameRef.current.value : "";
+  //E.5
+  //   const handleSubmitForm = (event: FormEvent) => {
+  //     event.preventDefault();
+  //     console.log("------submitted form");
+  //     console.log(formRequest);
+  //   };
 
-    // request.email = emailRef.current !== null ? emailRef.current.value : "";
-
-    // request.phone = phoneRef.current !== null ? phoneRef.current.value : "";
-
-    // request.subject =
-    //   subjectRef.current !== null ? subjectRef.current.value : "";
-
-    // request.message = msgRef.current !== null ? msgRef.current.value : "";
+  //E.6
+  const onFormSubmit = (data: FieldValues) => {
+    //form values to be used in API request
+    console.log("form field values: ", data);
   };
 
   return (
-    <form onSubmit={handleSubmitForm}>
+    //E.5
+    <form onSubmit={handleSubmit(onFormSubmit)}>
       <div className="container">
         <div className="card">
           <div className="card-header">
@@ -46,10 +46,13 @@ const Form = () => {
                 Name
               </label>
               <input
-                onChange={(event) =>
-                  setFormRequest({ ...formRequest, name: event.target.value })
-                }
-                value={formRequest.name}
+                // onChange={(event) =>
+                //   setFormRequest({ ...formRequest, name: event.target.value })
+                // }
+
+                //E.3 use register object w properties/ events onBlur, onChange, ref using Spread Operator
+                {...register("name")}
+                // value={formRequest.name}
                 id="name"
                 type="text"
                 className="form-control"
@@ -60,9 +63,10 @@ const Form = () => {
                 Email
               </label>
               <input
-                onChange={(event) =>
-                  setFormRequest({ ...formRequest, email: event.target.value })
-                }
+                // onChange={(event) =>
+                //   setFormRequest({ ...formRequest, email: event.target.value })
+                // }
+                {...register("email")}
                 id="email"
                 type="email"
                 className="form-control"
@@ -73,10 +77,11 @@ const Form = () => {
                 Phone
               </label>
               <input
-                onChange={(event) =>
-                  setFormRequest({ ...formRequest, phone: event.target.value })
-                }
-                value={formRequest.phone}
+                // onChange={(event) =>
+                //   setFormRequest({ ...formRequest, phone: event.target.value })
+                // }
+                {...register("phone")}
+                // value={formRequest.phone}
                 id="phone"
                 type="text"
                 className="form-control"
@@ -88,13 +93,14 @@ const Form = () => {
                 Subject
               </label>
               <input
-                onChange={(event) =>
-                  setFormRequest({
-                    ...formRequest,
-                    subject: event.target.value,
-                  })
-                }
-                value={formRequest.subject}
+                // onChange={(event) =>
+                //   setFormRequest({
+                //     ...formRequest,
+                //     subject: event.target.value,
+                //   })
+                // }
+                {...register("subject")}
+                // value={formRequest.subject}
                 id="subject"
                 type="text"
                 className="form-control"
@@ -106,13 +112,14 @@ const Form = () => {
                 Message
               </label>
               <textarea
-                onChange={(event) =>
-                  setFormRequest({
-                    ...formRequest,
-                    message: event.target.value,
-                  })
-                }
-                value={formRequest.message}
+                // onChange={(event) =>
+                //   setFormRequest({
+                //     ...formRequest,
+                //     message: event.target.value,
+                //   })
+                // }
+                {...register("message")}
+                // value={formRequest.message}
                 id="message"
                 className="form-control"
               />

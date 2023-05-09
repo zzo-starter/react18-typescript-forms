@@ -32,3 +32,14 @@ Via create-react-app (CRA) OR Vite (faster)
 - C) accessing form fields
 
 - D) controlled components
+
+## E React-Hook-Form Library
+
+Use reactHookForm w built in useful functions
+
+- 1. $> npm i react-hook-form@7.43
+- 2. inspect REGISTER function properties/ events/ methods
+- 3. use properties/ events on form fields
+- 4. dont need use STATE HOOK to create the form object
+- 5. dont need to handle submit form w custom handler; use REGISTER handleSubmit()
+- 6. create function to handle form submission data
