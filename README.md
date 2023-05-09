@@ -43,3 +43,11 @@ Use reactHookForm w built in useful functions
 - 4. dont need use STATE HOOK to create the form object
 - 5. dont need to handle submit form w custom handler; use REGISTER handleSubmit()
 - 6. create function to handle form submission data
+
+## F Form Validation using RHF
+
+- 1. add field validation rules to each form field; validates before submitting
+- 2. use FORMSTATE method from REACT HOOK FORM to display any field errors
+- 3. inspect error object
+- 4. destructure formState property since we will repeatedly use in our fields to display our error messages
+- 5. add error messages to fields
