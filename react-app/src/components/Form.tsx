@@ -1,5 +1,33 @@
 import { FormEvent, useRef, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+//G.3
+const schema = z.object({
+  name: z
+    .string()
+    .min(6, { message: "Name must be at least 6 characters" }) //G.8
+    .max(60, { message: "Name maximum length is 60 characters" }), //G.8
+  email: z
+    .string()
+    .min(6, { message: "Email must be at least 6 characters" })
+    .max(60, { message: "Email maximum length is 60 characters" }),
+  phone: z
+    .string()
+    .min(10, { message: "Phone must be at least 10 numbers" })
+    .max(15, { message: "Phone maximum length is 15 numbers" }),
+  subject: z
+    .string()
+    .min(10, { message: "Subject must be at least 10 characters" })
+    .max(50, { message: "Subject maximum length is 50 characters" }),
+  message: z
+    .string()
+    .min(25, { message: "Message must be at least 25 characters" })
+    .max(400, { message: "Message maximum length is 400 characters" }),
+});
+
+type FormData = z.infer<typeof schema>;
 
 const Form = () => {
   //E.2
@@ -9,11 +37,13 @@ const Form = () => {
   //E.3 destructure the register function
   //F.2 use formState
   //F.4 const { register, handleSubmit, formState } = useForm();
+
+  //G.6 implement resolver
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   console.log("testing register func: ", register("name"));
   //F.2
@@ -58,65 +88,30 @@ const Form = () => {
                 Name
               </label>
               <input
-                // onChange={(event) =>
-                //   setFormRequest({ ...formRequest, name: event.target.value })
-                // }
-
-                //E.3 use register object w properties/ events onBlur, onChange, ref using Spread Operator
-                //F.1 add validation params
-                {...register("name", {
-                  required: true,
-                  minLength: 6,
-                  maxLength: 60,
-                })}
-                // value={formRequest.name}
+                {...register("name")}
                 id="name"
                 type="text"
                 className="form-control"
               />
               {
-                //F.5 if error w name and type is required
-                errors.name?.type == "required" && (
-                  <p className="text-danger">Name is required</p>
+                //G.7 simplify logic
+                errors.name && (
+                  <p className="text-danger"> {errors.name.message}</p>
                 )
               }
-              {errors.name?.type == "minLength" && (
-                <p className="text-danger">
-                  Name must be at least 6 characters in length
-                </p>
-              )}
-              {errors.name?.type == "maxLength" && (
-                <p className="text-danger">
-                  Name can be maximum 60 characters in length
-                </p>
-              )}
             </div>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">
                 Email
               </label>
               <input
-                {...register("email", {
-                  required: true,
-                  minLength: 6,
-                  maxLength: 50,
-                })}
+                {...register("email")}
                 id="email"
                 type="email"
                 className="form-control"
               />
-              {errors.email?.type == "required" && (
-                <p className="text-danger">Email is required</p>
-              )}
-              {errors.email?.type == "minLength" && (
-                <p className="text-danger">
-                  Email must be at least 6 characters in length
-                </p>
-              )}
-              {errors.email?.type == "maxLength" && (
-                <p className="text-danger">
-                  Email can be maximum 50 characters in length
-                </p>
+              {errors.email && (
+                <p className="text-danger"> {errors.email.message}</p>
               )}
             </div>
             <div className="mb-3">
@@ -124,28 +119,13 @@ const Form = () => {
                 Phone
               </label>
               <input
-                {...register("phone", {
-                  required: true,
-                  minLength: 10,
-                  maxLength: 15,
-                })}
-                // value={formRequest.phone}
+                {...register("phone")}
                 id="phone"
                 type="text"
                 className="form-control"
               />
-              {errors.phone?.type == "required" && (
-                <p className="text-danger">Phone is required</p>
-              )}
-              {errors.phone?.type == "minLength" && (
-                <p className="text-danger">
-                  Phone must be at least 10 characters in length
-                </p>
-              )}
-              {errors.phone?.type == "maxLength" && (
-                <p className="text-danger">
-                  Phone can be maximum 15 characters in length
-                </p>
+              {errors.phone && (
+                <p className="text-danger"> {errors.phone.message}</p>
               )}
             </div>
 
@@ -154,34 +134,13 @@ const Form = () => {
                 Subject
               </label>
               <input
-                // onChange={(event) =>
-                //   setFormRequest({
-                //     ...formRequest,
-                //     subject: event.target.value,
-                //   })
-                // }
-                {...register("subject", {
-                  required: true,
-                  minLength: 10,
-                  maxLength: 50,
-                })}
-                // value={formRequest.subject}
+                {...register("subject")}
                 id="subject"
                 type="text"
                 className="form-control"
               />
-              {errors.subject?.type == "required" && (
-                <p className="text-danger">Subject is required</p>
-              )}
-              {errors.subject?.type == "minLength" && (
-                <p className="text-danger">
-                  Subject must be at least 10 characters in length
-                </p>
-              )}
-              {errors.subject?.type == "maxLength" && (
-                <p className="text-danger">
-                  Subject can be maximum 50 characters in length
-                </p>
+              {errors.subject && (
+                <p className="text-danger"> {errors.subject.message}</p>
               )}
             </div>
 
@@ -190,33 +149,12 @@ const Form = () => {
                 Message
               </label>
               <textarea
-                // onChange={(event) =>
-                //   setFormRequest({
-                //     ...formRequest,
-                //     message: event.target.value,
-                //   })
-                // }
-                {...register("message", {
-                  required: true,
-                  minLength: 25,
-                  maxLength: 500,
-                })}
-                // value={formRequest.message}
+                {...register("message")}
                 id="message"
                 className="form-control"
               />
-              {errors.message?.type == "required" && (
-                <p className="text-danger">Message is required</p>
-              )}
-              {errors.message?.type == "minLength" && (
-                <p className="text-danger">
-                  Message must be at least 25 characters in length
-                </p>
-              )}
-              {errors.message?.type == "maxLength" && (
-                <p className="text-danger">
-                  Message can be maximum 500 characters in length
-                </p>
+              {errors.message && (
+                <p className="text-danger"> {errors.message.message}</p>
               )}
             </div>
           </div>

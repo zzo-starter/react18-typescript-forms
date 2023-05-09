@@ -51,3 +51,16 @@ Use reactHookForm w built in useful functions
 - 3. inspect error object
 - 4. destructure formState property since we will repeatedly use in our fields to display our error messages
 - 5. add error messages to fields
+
+## G Schema -Based Form Validation
+
+Several existing libraries ~ Joi, Yup, Zod
+
+- 1. $> npm i zod@3.20.6
+- 2. @component import > import {zod} from "zod";
+- 3. implement schema
+- 4. now we integrate react-hook-forms w validation libraries (Joi, Yup, Zod)$>npm i @hookform/resolvers@2.9.11
+- 5. @component import > import {zodResolver } from "@hookform/resolvers/zod";
+- 6. implement resolver
+- 7. update field error logic> errors.name && ( <p className="text-danger"> {errors.name.message}</p> )
+- 8. can customize error messages
