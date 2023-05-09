@@ -21,15 +21,11 @@ const Form = () => {
     console.log("------submitted form");
     console.log(formRequest);
 
-    // request.name = nameRef.current !== null ? nameRef.current.value : "";
-
+    // request.name = nameRef.current !== null ? nameRef.current.value : ""; 
     // request.email = emailRef.current !== null ? emailRef.current.value : "";
-
     // request.phone = phoneRef.current !== null ? phoneRef.current.value : "";
-
-    // request.subject =
-    //   subjectRef.current !== null ? subjectRef.current.value : "";
-
+    // request.subject = subjectRef.current !== null ? subjectRef.current.value : "";
+ 
     // request.message = msgRef.current !== null ? msgRef.current.value : "";
   };
 
