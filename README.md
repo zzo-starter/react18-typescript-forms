@@ -64,3 +64,10 @@ Several existing libraries ~ Joi, Yup, Zod
 - 6. implement resolver
 - 7. update field error logic> errors.name && ( <p className="text-danger"> {errors.name.message}</p> )
 - 8. can customize error messages
+
+## H Disable Form Submit Button
+
+issue is that if disabled; does not show errors???
+
+- 1. @formState, we can use property to check if form is valid
+- 2. @button use property to set/unset disabled

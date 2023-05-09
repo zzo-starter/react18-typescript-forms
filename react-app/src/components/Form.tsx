@@ -30,19 +30,13 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const Form = () => {
-  //E.2
-  //const form = useForm();
-  //console.log("form properties/methods: ", form);
-
-  //E.3 destructure the register function
   //F.2 use formState
   //F.4 const { register, handleSubmit, formState } = useForm();
-
   //G.6 implement resolver
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid }, //H.1
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   console.log("testing register func: ", register("name"));
@@ -51,23 +45,6 @@ const Form = () => {
   //F.3 console.log("inspect formState errors: ", formState.errors);
   console.log("inspect formState errors: ", errors);
 
-  //E.4 dont need useState
-  //   const [formRequest, setFormRequest] = useState({
-  //     name: "",
-  //     email: "",
-  //     phone: "",
-  //     subject: "",
-  //     message: "",
-  //   });
-
-  //E.5
-  //   const handleSubmitForm = (event: FormEvent) => {
-  //     event.preventDefault();
-  //     console.log("------submitted form");
-  //     console.log(formRequest);
-  //   };
-
-  //E.6
   const onFormSubmit = (data: FieldValues) => {
     //form values to be used in API request
     console.log("form-submitted");
@@ -75,7 +52,6 @@ const Form = () => {
   };
 
   return (
-    //E.5
     <form onSubmit={handleSubmit(onFormSubmit)}>
       <div className="container">
         <div className="card">
@@ -160,7 +136,11 @@ const Form = () => {
           </div>
 
           <div className="card-footer">
-            <button className="btn btn-primary" type="submit">
+            <button
+              disabled={!isValid}
+              className="btn btn-primary"
+              type="submit"
+            >
               Submit
             </button>
           </div>
